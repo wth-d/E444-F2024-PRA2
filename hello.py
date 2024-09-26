@@ -5,7 +5,7 @@ from flask_moment import Moment
 # web forms
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Email
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string' # for wtf web form
@@ -16,6 +16,7 @@ moment = Moment(app)
 
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
+    email = StringField('Email address', validators=[Email()])
     submit = SubmitField('Submit')
 
 @app.errorhandler(404)
@@ -36,8 +37,13 @@ def index():
             flash('Looks like you have changed your name!')
         session['name'] = form.name.data # store it in session dict instead of in a plain Python variable;
         # form.name.data = ''
+        
+        if form.email.data.find('utoronto') != -1:
+            session['email'] = form.email.data
+        else:
+            session['email'] = None
         return redirect(url_for('index'))
-    return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'))
+    return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'), email=session.get('email'))
 
 @app.route('/user/<name>')
 def user(name):
