@@ -51,3 +51,6 @@ def user(name):
     return render_template('user.html', name=name)
 
 # print("app.config is", app.config)
+
+if __name__ == "__main__":
+    app.run("127.0.0.1", port=5000, debug=True)
