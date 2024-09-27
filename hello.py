@@ -38,7 +38,7 @@ def index():
         session['name'] = form.name.data # store it in session dict instead of in a plain Python variable;
         # form.name.data = ''
         
-        if form.email.data.find('utoronto') != -1:
+        if form.email.data.endswith('utoronto.ca'): # endswith instead of find() - mail.utoronto.ca@gmail.com
             session['email'] = form.email.data
         else:
             session['email'] = None
