@@ -53,4 +53,6 @@ def user(name):
 # print("app.config is", app.config)
 
 if __name__ == "__main__":
-    app.run("127.0.0.1", port=5000, debug=True)
+    # app.run("127.0.0.1", port=5000, debug=True)
+    app.run("0.0.0.0", port=5000, debug=True)
+    # If not specifying --host=0.0.0.0 in Dockerfile's flask run, then have to specify it here instead of 127.0.0.1 ...
